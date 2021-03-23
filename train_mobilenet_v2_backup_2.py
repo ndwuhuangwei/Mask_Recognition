@@ -9,8 +9,6 @@ from tqdm import tqdm
 from model_v2 import MobileNetV2
 import matplotlib.pyplot as plt
 
-import datetime
-
 img_data_dir = "face_data_1"
 save_weights_path = "./save_weights/resMobileNetV2.ckpt"
 
@@ -23,7 +21,7 @@ def main():
     assert os.path.exists(train_dir), "cannot find {}".format(train_dir)
     assert os.path.exists(validation_dir), "cannot find {}".format(validation_dir)
 
-    log_save_path = os.path.join(data_root, "train_log")
+    log_save_path = os.path.join(data_root, "loss log")
     assert os.path.exists(log_save_path)
 
     loss_path = "loss_1.jpg"
@@ -129,13 +127,6 @@ def main():
     val_loss_y_list = []
     val_accuracy_y_list = []
 
-    # 为tensorboard准备目录
-    current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    train_log_dir = './train_log/' + current_time + '/train'
-    val_log_dir = './train_log/' + current_time + '/val'
-    train_summary_writer = tf.summary.create_file_writer(train_log_dir)
-    val_summary_writer = tf.summary.create_file_writer(val_log_dir)
-
     best_val_acc = 0.
     for epoch in range(epochs):
         train_loss.reset_states()  # clear history info
@@ -160,11 +151,6 @@ def main():
         train_loss_y_list.append(train_loss.result().numpy())
         train_accuracy_y_list.append(train_accuracy.result().numpy())
 
-        # tensorboard
-        with train_summary_writer.as_default():
-            tf.summary.scalar('loss', train_loss.result(), step=epoch)
-            tf.summary.scalar('accuracy', train_accuracy.result(), step=epoch)
-
         # validate
         val_bar = tqdm(range(total_val // batch_size))
         for step in val_bar:
@@ -180,11 +166,6 @@ def main():
         val_loss_y_list.append(val_loss.result().numpy())
         val_accuracy_y_list.append(val_accuracy.result().numpy())
 
-        # tensorboard
-        with val_summary_writer.as_default():
-            tf.summary.scalar('loss', val_loss.result(), step=epoch)
-            tf.summary.scalar('accuracy', val_accuracy.result(), step=epoch)
-
         # only save best weights
         if val_accuracy.result() > best_val_acc:
             best_val_acc = val_accuracy.result()
@@ -196,7 +177,7 @@ def main():
     ax.set_ylabel('loss')
     ax.plot(x_list, train_loss_y_list, color='red', linewidth=1, alpha=0.6)
     ax.plot(x_list, val_loss_y_list, color='purple', linewidth=1, alpha=0.6)
-    plt.legend(labels=['train', 'val'])
+    plt.legend(handles=[11, 12], labels=['train', 'val'], loc='best')
     plt.savefig(plt_save_path_loss)
 
     plt.figure('accuracy log')
@@ -205,7 +186,7 @@ def main():
     ax.set_ylabel('accuracy')
     ax.plot(x_list, train_accuracy_y_list, color='blue', linewidth=1, alpha=0.6)
     ax.plot(x_list, val_accuracy_y_list, color='cyan', linewidth=1, alpha=0.6)
-    plt.legend(labels=['train', 'val'])
+    plt.legend(handles=[11, 12], labels=['train', 'val'], loc='best')
     plt.savefig(plt_save_path_accuracy)
 
     plt.show()
