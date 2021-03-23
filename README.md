@@ -1,3 +1,9 @@
+# 2021-3-24更新
+感谢 电子信息学院石雅琪同学的建议，先检测人脸再对人脸作预测可以有效避免环境干扰
+
+本程序目前存在一个bug,在检测不到人脸时画面会卡住，理论上它应该要在画面中实时显示错误信息，单步调试时功能完好，但是运行起来却会卡住。目前尚未找到解决方法。
+<br>虽然没检测到人脸时会被卡住，但是一旦再次检测到人脸又会正常运行,所以此bug只是会影响用户体验，并不影响口罩识别的核心功能
+
 #项目简介
 这是一个人脸口罩识别的小项目
 
@@ -52,8 +58,10 @@ model.load_weights(weights_path)
 ```
 
 # 如何用新的数据集训练
-本项目的数据集位于 data_set 文件夹中，目前有两个数据集，face_data_1比较小，face_data_2比较大
+因为数据集太大了，因此我没有在github上放数据集 <br>
+你可以参考这里的数据集 https://github.com/X-zhangyang/Real-World-Masked-Face-Dataset
 
+如果你要训练自己的数据集，首先在工程目录下新建一个data_set文件夹 <br>
 新的数据集应该放入data_set中，目录结构如下：
 > data_set
 >> ...
@@ -116,8 +124,10 @@ tf_mobilenet_weights 文件夹中，如果想要使用自己的预训练模型�
 
 # 运行情况展示
 ![avator](./Doc Pictures/run_1.png)
+<img src="./Doc Pictures/run_1.png"/>
 
 ![avator](./Doc Pictures/run_2.png)
+<img src="./Doc Pictures/run_2.png">
 
 # 其他
 1. 运行程序时可能会报错 Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
