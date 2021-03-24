@@ -60,7 +60,7 @@ while 1:
         continue
 
     # 将实时图像中的人脸框出来
-    cv2.rectangle(cv_img, (x, y), (x + w, y + h), (0, 0, 255), 2)
+    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
     # 将原图像的人脸部分剪切下来进行预测
     # cropped_img = cv_img[int(y):int(y + h), int(x):int(x + w)]
@@ -77,10 +77,10 @@ while 1:
     fps = cap.get(cv2.CAP_PROP_FPS)
     fps_text = "fps: " + str(fps)
 
-    cv2.putText(cv_img, fps_text, (10, 30), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 255), 2)
-    cv2.putText(cv_img, result_class_text, (120, 30), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 255), 2)
-    cv2.putText(cv_img, result_prob_text, (360, 30), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 255), 2)
-    cv2.imshow("cap", cv_img)
+    cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 255), 2)
+    cv2.putText(frame, result_class_text, (120, 30), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 255), 2)
+    cv2.putText(frame, result_prob_text, (360, 30), cv2.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 255), 2)
+    cv2.imshow("cap", frame)
 
     if cv2.waitKey(100) & 0xff == ord('q'):
         break

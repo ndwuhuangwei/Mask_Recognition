@@ -33,8 +33,8 @@ def main():
 
     im_height = 224
     im_width = 224
-    batch_size = 32
-    epochs = 10
+    batch_size = 16
+    epochs = 20
     num_classes = 2
 
     def pre_function(img):
