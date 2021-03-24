@@ -190,6 +190,7 @@ def main():
             best_val_acc = val_accuracy.result()
             model.save_weights(save_weights_path, save_format="tf")
 
+    # 自己画loss和accuracy的图
     plt.figure('loss log')
     ax = plt.gca()
     ax.set_xlabel('epoch')
